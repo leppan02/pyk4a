@@ -15,10 +15,10 @@ help:
 
 
 setup:
-	pip install -r requirements-dev.txt
+	pip3 install -r requirements-dev.txt
 
 build:
-	pip install -e .
+	pip3 install -e .
 
 fmt:
 	isort  $(SOURCES)

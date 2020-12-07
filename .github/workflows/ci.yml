@@ -17,9 +17,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Python 3.7
-      uses: actions/setup-python@v2
+      uses: actions/setup-python3@v2
       with:
-        python-version: 3.7
+        python3-version: 3.7
     - name: Cache PyPI
       uses: actions/cache@v2
       with:
@@ -37,7 +37,7 @@ jobs:
   test:
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8']
+        python3-version: ['3.6', '3.7', '3.8']
       fail-fast: true
     name: Test
     runs-on: ubuntu-18.04
@@ -50,24 +50,24 @@ jobs:
           env DEBIAN_FRONTEND=noninteractive ACCEPT_EULA=Y sudo -E apt install -q -y  libk4a1.4-dev
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup Python  ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - name: Setup Python  ${{ matrix.python3-version }}
+        uses: actions/setup-python3@v2
         with:
-          python-version:  ${{ matrix.python-version }}
+          python3-version:  ${{ matrix.python3-version }}
       - name: Cache PyPI
         uses: actions/cache@v2
         with:
-          key: pip-cache-test-${{ matrix.python-version }}-${{ hashFiles('requirements-dev.txt') }}-${{ hashFiles('setup.py') }}
+          key: pip-cache-test-${{ matrix.python3-version }}-${{ hashFiles('requirements-dev.txt') }}-${{ hashFiles('setup.py') }}
           path: ~/.cache/pip
           restore-keys: |
-              pip-cache-test-${{ matrix.python-version }}
+              pip-cache-test-${{ matrix.python3-version }}
       - name: Install dependencies
         uses: py-actions/py-dependency-install@v2
         with:
           path: requirements-dev.txt
       - name: Install module
         run:
-          pip install -e .
+          pip3 install -e .
       - name: Run tests
         run: |
           make test-no-hardware
